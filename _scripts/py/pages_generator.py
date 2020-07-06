@@ -65,7 +65,12 @@ def get_categories():
     for dir in POSTS_DIR:
         path = get_path(dir)
         for file in glob.glob(os.path.join(path, '*.md')):
-            meta = yaml.load(get_yaml(file)[0])
+            meta = None
+            try:
+                meta = yaml.load(get_yaml(file)[0])
+            except Exception as ex:
+                print(file)
+                raise ex
 
             if 'category' in meta:
                 if type(meta['category']) == list:
